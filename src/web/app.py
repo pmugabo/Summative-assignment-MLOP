@@ -5,7 +5,34 @@ import numpy as np
 import plotly.express as px
 import pandas as pd
 from datetime import datetime
+import sys
+import os
 
+# Add src to path for imports
+sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
+
+# Import local modules
+from preprocessing import AudioPreprocessor
+from model import create_model
+import tensorflow as tf
+
+# Initialize components
+@st.cache_resource
+def load_model():
+    """Load the trained model"""
+    model = create_model()
+    # Load your trained weights
+    try:
+        model.load_weights('../models/best_cnn_model.h5')
+        return model
+    except:
+        st.error("Model file not found. Please ensure model is trained.")
+        return None
+
+@st.cache_resource  
+def load_preprocessor():
+    """Load audio preprocessor"""
+    return AudioPreprocessor()
 
 def retrain_section():
     st.header("Model Retraining")
@@ -27,7 +54,7 @@ def retrain_section():
                     # Send files to API
                     files = [("files", (f.name, f, "audio/wav")) for f in uploaded_files]
                     response = requests.post(
-                        "http://api:8000/retrain/",
+                        f"{API_URL}/retrain/",
                         files=files
                     )
                     response.raise_for_status()
@@ -39,7 +66,7 @@ def retrain_section():
                     
                     # Poll for training status
                     while True:
-                        status = requests.get("http://api:8000/training-status/").json()
+                        status = requests.get(f"{API_URL}/training-status/").json()
                         status_text.text(f"Status: {status['status']}\n{status['message']}")
                         
                         if status['status'] == 'completed':
@@ -60,12 +87,12 @@ def retrain_section():
 # Configuration
 st.set_page_config(
     page_title="UrbanSound8K Classifier",
-    page_icon="🎵",
+    page_icon="",
     layout="wide"
 )
 
-# Constants
-API_URL = "http://localhost:8000"
+# Constants - Support both local and Render deployment
+API_URL = os.getenv("API_URL", "http://localhost:8000")
 
 # Helper functions
 @st.cache_data
