@@ -4,10 +4,10 @@
 This project implements an end-to-end machine learning pipeline for environmental sound classification using the UrbanSound8K dataset. The system includes audio preprocessing, feature extraction, model training, API serving, and a web interface for predictions and model management.
 
 ## Video Demo
-**YouTube Link:** [ADD YOUR YOUTUBE DEMO LINK HERE]
+**YouTube Link:** [https://www.youtube.com/watch?v=oac-k1MsDn0]
 
 ## Live Demo URL
-**Web App:** [ADD YOUR DEPLOYED URL HERE] (or http://localhost:8501 for local)
+**Web App:** http://localhost:8501 
 
 ## Features
 - **Audio Classification**: Classify environmental sounds into 10 categories
