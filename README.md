@@ -180,7 +180,7 @@ Once the API is running, visit:
 - **File Size**: 4-second audio clips
 
 ## Video Demo
-[YouTube Demo Link](https://youtu.be/demo-video-link-here)
+[YouTube Demo Link](https://www.youtube.com/watch?v=oac-k1MsDn0)
 
 *Video demonstrates:*
 - Single audio file prediction
